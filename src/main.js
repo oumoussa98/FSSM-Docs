@@ -1,10 +1,23 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import vuetify from "./plugins/vuetify";
+import * as firebase from "firebase";
 
-Vue.config.productionTip = false
+
+Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+	router,
+	vuetify,
+	render: (h) => h(App),
+	created() {
+		firebase.initializeApp({
+			apiKey: "AIzaSyBpjbXVMUKHx77navIKO8IChlql94oFJmQ",
+			authDomain: "fssm-fb8e7.firebaseapp.com",
+			databaseURL: "https://fssm-fb8e7.firebaseio.com",
+			projectId: "fssm-fb8e7",
+			storageBucket: "fssm-fb8e7.appspot.com",
+		});
+	},
+}).$mount("#app");
