@@ -1,0 +1,87 @@
+{
+	"levels": [
+		"Licence Fondamental",
+		"Licence Professionelle",
+		"Master",
+		"Doctorat"
+	],
+	"lfsemestres": ["S1", "S2", "S3", "S4", "S5", "S6"],
+	"lpsemestres": ["S3", "S4", "S5", "S6"],
+	"lfFilieres": ["SMPC", "SVTU", "SMIA"],
+	"lpFilieres": [
+		"LP-OO",
+		"LP-3ER",
+		"LP-TCBTP",
+		"LP-STADLS",
+		"LP-CV",
+		"LP-ACQ",
+		"LP-R2MV",
+		"LP-R2SI",
+		"LP-TPW",
+		"LP-GRN",
+		"LP-EOES"
+	],
+	"lfmodules": {
+		"SMPC": {
+			"S1": [
+				"Mécanique du point",
+				"hermodynamique 1",
+				"Atomistique",
+				"Thermochimie",
+				"Analyse 1",
+				"Algébre 1",
+				"Langue & terminologie 1"
+			],
+			"S2": [
+				"Électrostatique & Électrocinétique",
+				"Optique géométrique",
+				" Liaisons chimiques",
+				" Chimie des Solutions",
+				" Analyse 2",
+				" Algébre 2",
+				" Langue & terminologie 2"
+			]
+		},
+		"SVTU": {
+			"S1": [
+				"Biologie Cellulaire",
+				"Embryologie et Histologie",
+				"Géologie générale",
+				"Mathématiques",
+				"Physique I: Optique-Physique nucléaire Thermodynamique",
+				"Chimie I: Chimie Générale",
+				"Langue et Terminologie I"
+			],
+			"S2": [
+				"Biologie des organismes animaux",
+				"Biologie des organismes végétaux",
+				"Géodynamique externe",
+				"Géodynamique interne",
+				"Physique II: Mécanique - Electricité",
+				"Chimie II: Chimie Organique",
+				"Langue et Terminologie II"
+			]
+		},
+
+		"SMIA": {
+			"S1": [
+				"Analyse 1",
+				"Algebre 1",
+				"Algebre 2",
+				"Physique 1",
+				"Physique 2",
+				"Informatique 1",
+				"Langue & terminologie 1"
+			],
+			"S2": [
+				"Analyse 2",
+				"Analyse 3",
+				"Algebre 3",
+				"Physique 3",
+				"Physique 4",
+				"Informatique 2",
+				"Langue & terminologie 2"
+			]
+		}
+	}
+}
