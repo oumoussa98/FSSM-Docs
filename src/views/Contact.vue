@@ -3,10 +3,9 @@
 		<v-form
 			name="contact"
 			method="POST"
-			v-on:submit.prevent="handleSubmit"
-			action="/success/"
 			data-netlify="true"
 			data-netlify-honeypot="bot-field"
+			v-on:submit.prevent="handleSubmit"
 			ref="form"
 			v-model="valid"
 			lazy-validation
@@ -139,7 +138,10 @@ export default {
 				}),
 			})
 				.then(() => this.Submited())
-				.catch((error) => (this.errorMessage = error));
+				.catch((error) => {
+					this.errorMessage = error;
+					console.log(error);
+				});
 		},
 	},
 };
