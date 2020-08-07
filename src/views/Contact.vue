@@ -2,10 +2,10 @@
 	<v-container class="mt-4">
 		<v-form
 			name="contact"
+			netlify
 			method="POST"
 			data-netlify="true"
 			data-netlify-honeypot="bot-field"
-			v-on:submit.prevent="handleSubmit"
 			ref="form"
 			v-model="valid"
 			lazy-validation
@@ -18,7 +18,7 @@
 				</label>
 			</p>
 			<v-text-field
-				v-model="formData.name"
+				name="name"
 				:counter="30"
 				:rules="nameRules"
 				label="Name"
@@ -27,7 +27,7 @@
 				prepend-inner-icon="mdi-account"
 			></v-text-field>
 			<v-text-field
-				v-model="formData.email"
+				name="email"
 				:rules="emailRules"
 				filled
 				label="Email address"
@@ -36,13 +36,13 @@
 				prepend-inner-icon="mdi-email"
 			></v-text-field>
 			<v-text-field
-				v-model="formData.phone"
+				name="phone"
 				filled
 				label="Phone number"
 				prepend-inner-icon="mdi-phone"
 			></v-text-field>
 			<v-textarea
-				v-model="formData.message"
+				name="message"
 				:rules="messageRules"
 				auto-grow
 				filled
@@ -65,7 +65,7 @@
 				Reset Form
 			</v-btn>
 		</v-form>
-		<v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
+		<!-- <v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
 			<v-card class="pa-4">
 				<v-card-title class="success--text">
 					<v-icon class="pr-4" color="success">
@@ -80,7 +80,7 @@
 					</v-btn>
 				</v-card-title>
 			</v-card>
-		</v-dialog>
+		</v-dialog> -->
 	</v-container>
 </template>
 
@@ -88,10 +88,7 @@
 export default {
 	data: () => ({
 		valid: true,
-		errorMessage: false,
-		successMessage: false,
-		dialog: false,
-		formData: {},
+		//dialog: false,
 		nameRules: [
 			(v) => !!v || "Name is required",
 			(v) =>
@@ -110,38 +107,6 @@ export default {
 		},
 		reset() {
 			this.$refs.form.reset();
-		},
-		Submited() {
-			Object.keys(this.formData).forEach((k) => delete this.formData[k]);
-			this.reset();
-			this.successMessage = true;
-		},
-		encode(data) {
-			return Object.keys(data)
-				.map(
-					(key) =>
-						encodeURIComponent(key) +
-						"=" +
-						encodeURIComponent(data[key])
-				)
-				.join("&");
-		},
-		handleSubmit(e) {
-			fetch("/", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-				body: this.encode({
-					"form-name": e.target.getAttribute("name"),
-					...this.formData,
-				}),
-			})
-				.then(() => this.Submited())
-				.catch((error) => {
-					this.errorMessage = error;
-					console.log(error);
-				});
 		},
 	},
 };
