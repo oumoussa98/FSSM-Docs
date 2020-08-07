@@ -31,8 +31,8 @@
 <script>
 export default {
 	data: () => ({
-		lfSemestres: ["S1", "S2", "S3", "S4", "S5", "S6"],
-		lfFilieres: ["SMP", "SMC", "SVT", "SVU", "SMI", "SMA"],
+		lfSemestres: ["S1", "S2"],
+		lfFilieres: ["SMP"],
 		semestre: "",
 		filiere: "",
 		path: "",
