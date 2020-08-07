@@ -8,18 +8,13 @@
 </template>
 
 <script>
-import Header from "./components/partials/Header";
+import Header from "./layout/partials/Header";
 
 export default {
 	name: "App",
-
 	components: {
 		Header,
 	},
-
-	data: () => ({
-		//
-	}),
 };
 </script>
 <style lang="sass">
