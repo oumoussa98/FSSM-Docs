@@ -1,8 +1,25 @@
 <template>
 	<v-container class="mt-4">
-		<v-form ref="form" v-model="valid" lazy-validation>
+		<v-form
+			name="contact"
+			method="POST"
+			v-on:submit.prevent="handleSubmit"
+			action="/success/"
+			data-netlify="true"
+			data-netlify-honeypot="bot-field"
+			ref="form"
+			v-model="valid"
+			lazy-validation
+		>
+			<input type="hidden" name="form-name" value="contact" />
+			<p hidden>
+				<label>
+					Don’t fill this out:
+					<input name="bot-field" />
+				</label>
+			</p>
 			<v-text-field
-				v-model="name"
+				v-model="formData.name"
 				:counter="30"
 				:rules="nameRules"
 				label="Name"
@@ -11,7 +28,7 @@
 				prepend-inner-icon="mdi-account"
 			></v-text-field>
 			<v-text-field
-				v-model="email"
+				v-model="formData.email"
 				:rules="emailRules"
 				filled
 				label="Email address"
@@ -20,13 +37,13 @@
 				prepend-inner-icon="mdi-email"
 			></v-text-field>
 			<v-text-field
-				v-model="phone"
+				v-model="formData.phone"
 				filled
 				label="Phone number"
 				prepend-inner-icon="mdi-phone"
 			></v-text-field>
 			<v-textarea
-				v-model="message"
+				v-model="formData.message"
 				:rules="messageRules"
 				auto-grow
 				filled
@@ -40,6 +57,7 @@
 				color="success"
 				class="mr-8 px-8"
 				@click="validate"
+				type="submit"
 			>
 				Send
 			</v-btn>
@@ -48,6 +66,22 @@
 				Reset Form
 			</v-btn>
 		</v-form>
+		<v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
+			<v-card class="pa-4">
+				<v-card-title class="success--text">
+					<v-icon class="pr-4" color="success">
+						mdi-check
+					</v-icon>
+					submited successfully
+					<br />
+					Thanks for contacting us :)
+					<v-spacer></v-spacer>
+					<v-btn color="primary" @click="dialog = false">
+						CLOSE
+					</v-btn>
+				</v-card-title>
+			</v-card>
+		</v-dialog>
 	</v-container>
 </template>
 
@@ -55,28 +89,57 @@
 export default {
 	data: () => ({
 		valid: true,
-		phone: "",
-		name: "",
+		errorMessage: false,
+		successMessage: false,
+		dialog: false,
+		formData: {},
 		nameRules: [
 			(v) => !!v || "Name is required",
 			(v) =>
 				(v && v.length <= 30) || "Name must be less than 30 characters",
 		],
-		message: "",
 		messageRules: [(v) => !!v || "message is required"],
-		email: "",
 		emailRules: [
 			(v) => !!v || "E-mail is required",
 			(v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
 		],
 	}),
-
+	// Methods =============
 	methods: {
 		validate() {
 			this.$refs.form.validate();
 		},
 		reset() {
 			this.$refs.form.reset();
+		},
+		Submited() {
+			Object.keys(this.formData).forEach((k) => delete this.formData[k]);
+			this.reset();
+			this.successMessage = true;
+		},
+		encode(data) {
+			return Object.keys(data)
+				.map(
+					(key) =>
+						encodeURIComponent(key) +
+						"=" +
+						encodeURIComponent(data[key])
+				)
+				.join("&");
+		},
+		handleSubmit(e) {
+			fetch("/", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: this.encode({
+					"form-name": e.target.getAttribute("name"),
+					...this.formData,
+				}),
+			})
+				.then(() => this.Submited())
+				.catch((error) => (this.errorMessage = error));
 		},
 	},
 };
