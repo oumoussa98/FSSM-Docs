@@ -1,4 +1,5 @@
 {
+	"types": ["Cours", "Travaux diriges (TD)", "Controles", "Exercices"],
 	"levels": [
 		"Licence Fondamental",
 		"Licence Professionelle",
@@ -7,7 +8,7 @@
 	],
 	"lfsemestres": ["S1", "S2", "S3", "S4", "S5", "S6"],
 	"lpsemestres": ["S3", "S4", "S5", "S6"],
-	"lfFilieres": ["SMPC", "SVTU", "SMIA"],
+	"lfFilieres": ["SMP", "SMC", "SVT", "SVU", "SMI", "SMA"],
 	"lpFilieres": [
 		"LP-OO",
 		"LP-3ER",
@@ -22,48 +23,144 @@
 		"LP-EOES"
 	],
 	"lfmodules": {
-		"SMPC": {
+		"SMP": {
 			"S1": [
-				"Mécanique du point",
-				"hermodynamique 1",
+				"Mecanique du point",
+				"Thermodynamique 1",
 				"Atomistique",
 				"Thermochimie",
 				"Analyse 1",
-				"Algébre 1",
+				"Algebre 1",
 				"Langue & terminologie 1"
 			],
 			"S2": [
-				"Électrostatique & Électrocinétique",
-				"Optique géométrique",
-				" Liaisons chimiques",
-				" Chimie des Solutions",
-				" Analyse 2",
-				" Algébre 2",
-				" Langue & terminologie 2"
-			]
+				"Electrostatique & Electrocinetique",
+				"Optique geometrique",
+				"Liaisons chimiques",
+				"Chimie des Solutions",
+				"Analyse 2",
+				"Algebre 2",
+				"Langue & terminologie 2"
+			],
+			"S3": [
+				" Mecanique du solide",
+				" Thermodynamique 2",
+				" electromagnetisme dans le vide",
+				" Chimie Organique generale",
+				" Analyse 3",
+				"Analyse numerique et algorithme"
+			],
+			"S4": [
+				" Electronique de base",
+				" Optique physique",
+				" Electricite 3",
+				" Mecanique quantique",
+				" Cristallographie geometrique",
+				"Informatique"
+			],
+			"S5": [
+				"Electronique analogique",
+				"Mecanique analytique et vibration",
+				"Physique nucleaire",
+				"Physique des materiaux",
+				"Physique quantique",
+				"Physique statistique"
+			],
+			"S6": {
+				"options": [
+					"Energetique",
+					"Physique Moderne",
+					"Electronique",
+					"Physique de la Matiere Condensee",
+					"Automatique"
+				],
+				"Energetique": [
+					"Mecanique de Fluide",
+					"Mecanique des milieux continus",
+					"Transferts Thermiques",
+					"Methodes Numerique",
+					"Projet tutore",
+					"Projet tutore"
+				],
+				"PhysiqueModerne": [
+					"Physique quantique relativiste",
+					"Relativite et formalisme tensoriel",
+					"Optique Avancee",
+					"Physique computationnelle",
+					"Projet tutore",
+					"Projet tutore"
+				],
+				"Electronique": [
+					"Systeme numerique",
+					"electronique non lineaire et instrumentation",
+					"Telecommunications",
+					"Automatique",
+					"Projet tutore"
+				],
+				"PhysiquedelaMatiereCondensee": [
+					"Physique statistique II",
+					"Physique atomique",
+					"Physique du solide",
+					"Metrologie et Capteurs",
+					"Projet tutore",
+					"Projet tutore"
+				],
+				"Automatique": [
+					"Asservissement",
+					"Automatismes et capteurs",
+					"traitement du signal",
+					"Syntheses des correcteur/Logique floue",
+					"Projet tutore",
+					"Projet tutore"
+				]
+			}
 		},
-		"SVTU": {
+		"SVT": {
 			"S1": [
 				"Biologie Cellulaire",
 				"Embryologie et Histologie",
-				"Géologie générale",
-				"Mathématiques",
-				"Physique I: Optique-Physique nucléaire Thermodynamique",
-				"Chimie I: Chimie Générale",
+				"Geologie generale",
+				"Mathematiques",
+				"Physique I: Optique-Physique nucleaire Thermodynamique",
+				"Chimie I: Chimie Generale",
 				"Langue et Terminologie I"
 			],
 			"S2": [
 				"Biologie des organismes animaux",
-				"Biologie des organismes végétaux",
-				"Géodynamique externe",
-				"Géodynamique interne",
-				"Physique II: Mécanique - Electricité",
+				"Biologie des organismes vegetaux",
+				"Geodynamique externe",
+				"Geodynamique interne",
+				"Physique II: Mecanique - Electricite",
 				"Chimie II: Chimie Organique",
 				"Langue et Terminologie II"
+			],
+			"S3": [
+				"Biochimie Structurale",
+				"Microbiologie Generale",
+				"Ecologie Generale I",
+				"Techniques chimiques pour la biologie",
+				"Biophysique",
+				"Statistiques"
+			],
+			"S4": [
+				"Enzymologie & Biochimie Metabolique",
+				"Genetique",
+				"Faunistique",
+				"Floristique",
+				"Physiologie animale",
+				"Physiologie vegetale"
+			],
+			"S5": [
+				"Physiologie des Grandes Fonctions",
+				"Croissance et developpement des plantes",
+				"Ecologie Generale II",
+				"Immunologie",
+				"Genetique",
+				"Biologie moleculaire"
 			]
 		},
 
-		"SMIA": {
+		"SMI": {
 			"S1": [
 				"Analyse 1",
 				"Algebre 1",
@@ -81,6 +178,38 @@
 				"Physique 4",
 				"Informatique 2",
 				"Langue & terminologie 2"
+			],
+			"S3": [
+				"electronique",
+				"Technologie du web",
+				"Probabilites- Statistique",
+				"Systeme d’exploitation 1",
+				"Algorithmique 2",
+				"Programmation 1"
+			],
+			"S4": [
+				"electromagnetisme",
+				"Architecture des ordinateurs",
+				"Analyse Numerique",
+				"Systeme d’exploitation2",
+				"Structures de donnees",
+				"Programmation2"
+			],
+			"S5": [
+				"Programmation orientee Java",
+				"Systeme d’information",
+				"Compilation",
+				"Base de donnees",
+				"Recherche operationnelle",
+				"Reseaux"
+			],
+			"S6": [
+				"Projet Tutore 2",
+				"Projet Tutore 1",
+				"Base de donnees 2",
+				"Programmation Web",
+				"Conception Orientee (UML)",
+				"Intelligence Artificielle"
 			]
 		}
 	}
