@@ -27,6 +27,14 @@
 						label="Semestre"
 					></v-select>
 					<v-select
+						v-if="
+							level === 'Licence Fondamental' && semestre === 'S6'
+						"
+						v-model="option"
+						:items="s6Options"
+						label="Option"
+					></v-select>
+					<v-select
 						v-if="level === 'Licence Professionelle'"
 						v-model="semestre"
 						:items="lpsemestres"
@@ -42,6 +50,11 @@
 						v-model="Smodule"
 						:items="lfModules"
 						label="Module"
+					></v-select>
+					<v-select
+						v-model="type"
+						:items="types"
+						label="Type"
 					></v-select>
 
 					<v-file-input
@@ -60,13 +73,51 @@
 							</v-chip>
 						</template>
 					</v-file-input>
+
 					<v-btn
-						class="mr-10 mt-10 px-8 py-4"
-						color="success"
+						class="mr-10 mt-10 px-4 py-4"
+						color="#08bb4c"
 						type="submit"
+						dark
 					>
-						Upload
+						Upload File(s)
+						<v-icon class="px-4" right dark
+							>mdi-cloud-upload</v-icon
+						>
 					</v-btn>
+
+					<v-dialog v-model="dialog" persistent max-width="500px">
+						<v-card class="pa-4">
+							<v-card-text>
+								<v-progress-linear
+									class="mt-6"
+									v-model="uploadProgress"
+									height="20"
+									rounded
+									color="light-blue lighten-1"
+								>
+									<strong
+										>{{
+											Math.ceil(uploadProgress)
+										}}%</strong
+									>
+								</v-progress-linear>
+							</v-card-text>
+							<v-card-title
+								v-if="uploadProgress === 100"
+								class="success--text"
+							>
+								<v-icon class="pr-4" color="success">
+									mdi-check
+								</v-icon>
+								File(s) uploaded successfully
+								<v-spacer></v-spacer>
+								<v-btn color="primary" @click="dialog = false">
+									CLOSE
+								</v-btn>
+							</v-card-title>
+						</v-card>
+					</v-dialog>
 				</form>
 			</v-col>
 		</v-row>
@@ -79,81 +130,140 @@ import "firebase/storage";
 import json from "@/data/data.json";
 export default {
 	data: () => ({
-		files: [],
+		types: json.types,
 		levels: json.levels,
 		lpFilieres: json.lpFilieres,
 		lfsemestres: json.lfsemestres,
 		lpsemestres: json.lpsemestres,
 		lfFilieres: json.lfFilieres,
+		s6Options: [],
 		// models
+		files: [],
 		level: "",
 		semestre: "",
+		option: "",
 		lfModules: [],
 		filiere: "",
 		Smodule: "",
 		lpFiliere: "",
+		uploadProgress: null,
+		dialog: false,
+		type: "",
 	}),
 	methods: {
 		uploadFile() {
-			this.files.forEach((file) => {
-				firebase
+			let vm = this;
+			let uploadTask;
+			vm.files.forEach((file) => {
+				uploadTask = firebase
 					.storage()
 					.ref(
-						`${this.level}/${this.semestre}/${this.filiere}/${this.Smodule}/${file.name}`
+						`${this.level}/${this.semestre}/${this.filiere}/${this.Smodule}/${this.type}/${file.name}`
 					)
-					.put(this.files[0]);
+					.put(file);
+			});
+			uploadTask.on("state_changed", function(snapshot) {
+				vm.dialog = true;
+				vm.uploadProgress = Math.round(
+					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+				);
+				if (vm.uploadProgress === 100) {
+					vm.dialog = true;
+					vm.files = [];
+				}
 			});
 		},
 		getModules() {
 			if (this.level === "Licence Fondamental")
 				switch (this.filiere) {
-					case "SMPC":
+					// SMP
+					case "SMP":
 						switch (this.semestre) {
 							case "S1":
-								this.lfModules = json.lfmodules.SMPC.S1;
+								this.lfModules = json.lfmodules.SMP.S1;
 								break;
 							case "S2":
-								this.lfModules = json.lfmodules.SMPC.S2;
+								this.lfModules = json.lfmodules.SMP.S2;
+								break;
+							case "S3":
+								this.lfModules = json.lfmodules.SMP.S3;
+								break;
+							case "S4":
+								this.lfModules = json.lfmodules.SMP.S4;
+								break;
+							case "S5":
+								this.lfModules = json.lfmodules.SMP.S5;
+								break;
+							case "S6":
+								this.s6Options = json.lfmodules.SMP.S6.options;
+								switch (this.option) {
+									case "Energetique":
+										this.lfModules =
+											json.lfmodules.SMP.S6.Energetique;
+										break;
+									case "Physique Moderne":
+										this.lfModules =
+											json.lfmodules.SMP.S6.PhysiqueModerne;
+										break;
+									case "Electronique":
+										this.lfModules =
+											json.lfmodules.SMP.S6.Electronique;
+										break;
+									case "PhysiquedelaMatiere Condensee":
+										this.lfModules =
+											json.lfmodules.SMP.S6.PhysiquedelaMatiereCondensee;
+										break;
+									case "Automatique":
+										this.lfModules =
+											json.lfmodules.SMP.S6.Automatique;
+										break;
+								}
 						}
 						break;
-					case "SVTU":
+					// SVT
+					case "SVT":
 						switch (this.semestre) {
 							case "S1":
-								this.lfModules = json.lfmodules.SVTU.S1;
+								this.lfModules = json.lfmodules.SVT.S1;
 								break;
 							case "S2":
-								this.lfModules = json.lfmodules.SVTU.S2;
+								this.lfModules = json.lfmodules.SVT.S2;
+								break;
+							case "S3":
+								this.lfModules = json.lfmodules.SVT.S3;
+								break;
+							case "S4":
+								this.lfModules = json.lfmodules.SVT.S4;
+								break;
+							case "S5":
+								this.lfModules = json.lfmodules.SVT.S5;
+								break;
 						}
 						break;
-					case "SMIA":
+					// SMI
+					case "SMI":
 						switch (this.semestre) {
 							case "S1":
-								this.lfModules = json.lfmodules.SMIA.S1;
+								this.lfModules = json.lfmodules.SMI.S1;
 								break;
 							case "S2":
-								this.lfModules = json.lfmodules.SMIA.S2;
+								this.lfModules = json.lfmodules.SMI.S2;
+								break;
+							case "S3":
+								this.lfModules = json.lfmodules.SMI.S3;
+								break;
+							case "S4":
+								this.lfModules = json.lfmodules.SMI.S4;
+								break;
+							case "S5":
+								this.lfModules = json.lfmodules.SMI.S5;
+								break;
+							case "S6":
+								this.lfModules = json.lfmodules.SMI.S6;
+								break;
 						}
 				}
 		},
-		// getdata() {
-		// 	let storageRef = firebase.storage().ref();
-		// 	let listRef = storageRef.child("/Licence Fondamental/S1/optique/");
-
-		// 	// Find all the prefixes and items.
-		// 	listRef
-		// 		.listAll()
-		// 		.then(function(res) {
-		// 			console.log(res);
-		// 			res.items.forEach(function(itemRef) {
-		// 				console.log(itemRef.location.path);
-		// 			});
-		// 		})
-		// 		.catch(function(error) {
-		// 			console.log(error);
-		// 		});
-		// },
 	},
 };
 </script>
-
-<style></style>
