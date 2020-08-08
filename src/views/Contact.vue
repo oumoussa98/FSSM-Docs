@@ -1,71 +1,84 @@
 <template>
 	<v-container class="mt-4">
-		<v-form
+		<form
 			name="contact"
-			netlify
-			method="POST"
 			data-netlify="true"
 			data-netlify-honeypot="bot-field"
-			ref="form"
-			v-model="valid"
-			lazy-validation
 		>
-			<input type="hidden" name="form-name" value="contact" />
-			<p hidden>
-				<label>
-					Don’t fill this out:
-					<input name="bot-field" />
-				</label>
-			</p>
-			<v-text-field
-				name="name"
-				:counter="30"
-				:rules="nameRules"
-				label="Name"
-				filled
-				required
-				prepend-inner-icon="mdi-account"
-			></v-text-field>
-			<v-text-field
-				name="email"
-				:rules="emailRules"
-				filled
-				label="Email address"
-				type="email"
-				required
-				prepend-inner-icon="mdi-email"
-			></v-text-field>
-			<v-text-field
-				name="phone"
-				filled
-				label="Phone number"
-				prepend-inner-icon="mdi-phone"
-			></v-text-field>
-			<v-textarea
-				name="message"
-				:rules="messageRules"
-				auto-grow
-				filled
-				label="Message"
-				rows="1"
-				prepend-inner-icon="mdi-message"
-				required
-			></v-textarea>
-			<v-btn
-				:disabled="!valid"
-				color="success"
-				class="mr-8 px-8"
-				@click="validate"
-				type="submit"
+			<input type="hidden" name="name" value="$refs.name" />
+			<input type="hidden" name="email" value="$refs.email" />
+			<input type="hidden" name="phone" value="$refs.phone" />
+			<input type="hidden" name="message" value="$refs.message" />
+			<v-form
+				v-on:submit.prevent="handleSubmit"
+				method="POST"
+				ref="vform"
+				v-model="valid"
+				lazy-validation
 			>
-				Send
-			</v-btn>
+				<input type="hidden" name="form-name" value="contact" />
+				<p hidden>
+					<label>
+						Don’t fill this out:
+						<input name="bot-field" />
+					</label>
+				</p>
 
-			<v-btn color="error" class="mr-4" @click="reset">
-				Reset Form
-			</v-btn>
-		</v-form>
-		<!-- <v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
+				<v-text-field
+					v-model="formData.name"
+					:counter="30"
+					:rules="nameRules"
+					ref="name"
+					label="Name"
+					filled
+					required
+					prepend-inner-icon="mdi-account"
+				></v-text-field>
+				<v-text-field
+					ref="email"
+					v-model="formData.email"
+					:rules="emailRules"
+					filled
+					label="Email address"
+					type="email"
+					required
+					prepend-inner-icon="mdi-email"
+				></v-text-field>
+				<v-text-field
+					ref="phone"
+					v-model="formData.phone"
+					filled
+					label="Phone number"
+					prepend-inner-icon="mdi-phone"
+				></v-text-field>
+				<v-textarea
+					ref="message"
+					v-model="formData.message"
+					:rules="messageRules"
+					auto-grow
+					filled
+					label="Message"
+					rows="1"
+					prepend-inner-icon="mdi-message"
+					required
+				></v-textarea>
+				<v-btn
+					:disabled="!valid"
+					color="success"
+					class="mr-8 px-8"
+					@click="validate"
+					type="submit"
+				>
+					Send
+				</v-btn>
+
+				<v-btn color="error" class="mr-4" @click="reset">
+					Reset Form
+				</v-btn>
+			</v-form>
+		</form>
+
+		<v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
 			<v-card class="pa-4">
 				<v-card-title class="success--text">
 					<v-icon class="pr-4" color="success">
@@ -80,7 +93,7 @@
 					</v-btn>
 				</v-card-title>
 			</v-card>
-		</v-dialog> -->
+		</v-dialog>
 	</v-container>
 </template>
 
@@ -88,7 +101,10 @@
 export default {
 	data: () => ({
 		valid: true,
-		//dialog: false,
+		errorMessage: false,
+		successMessage: false,
+		dialog: false,
+		formData: {},
 		nameRules: [
 			(v) => !!v || "Name is required",
 			(v) =>
@@ -103,10 +119,42 @@ export default {
 	// Methods =============
 	methods: {
 		validate() {
-			this.$refs.form.validate();
+			this.$refs.vform.validate();
 		},
 		reset() {
-			this.$refs.form.reset();
+			this.$refs.vform.reset();
+		},
+		Submited() {
+			Object.keys(this.formData).forEach((k) => delete this.formData[k]);
+			this.reset();
+			this.successMessage = true;
+		},
+		encode(data) {
+			return Object.keys(data)
+				.map(
+					(key) =>
+						encodeURIComponent(key) +
+						"=" +
+						encodeURIComponent(data[key])
+				)
+				.join("&");
+		},
+		handleSubmit(e) {
+			fetch("/", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+				body: this.encode({
+					"form-name": e.target.getAttribute("name"),
+					...this.formData,
+				}),
+			})
+				.then(() => this.Submited())
+				.catch((error) => {
+					this.errorMessage = error;
+					console.log(error);
+				});
 		},
 	},
 };
