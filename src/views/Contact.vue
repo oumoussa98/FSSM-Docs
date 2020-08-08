@@ -1,132 +1,104 @@
 <template>
-	<v-container class="mt-4">
+	<v-container>
 		<form
+			ref="contact"
 			name="contact"
+			method="post"
+			v-on:submit.prevent="handleSubmit"
+			action="/success/"
 			data-netlify="true"
-			data-netlify-honeypot="bot-field"
 		>
-			<input type="hidden" name="name" value="$refs.name" />
-			<input type="hidden" name="email" value="$refs.email" />
-			<input type="hidden" name="phone" value="$refs.phone" />
-			<input type="hidden" name="message" value="$refs.message" />
-			<v-form
-				v-on:submit.prevent="handleSubmit"
-				method="POST"
-				ref="vform"
-				v-model="valid"
-				lazy-validation
-			>
-				<input type="hidden" name="form-name" value="contact" />
-				<p hidden>
-					<label>
-						Don’t fill this out:
-						<input name="bot-field" />
-					</label>
-				</p>
+			<input type="hidden" name="name" v-model="formData.name" />
+			<input type="hidden" name="email" v-model="formData.email" />
+			<input type="hidden" name="phone" v-model="formData.email" />
 
-				<v-text-field
-					v-model="formData.name"
-					:counter="30"
-					:rules="nameRules"
-					ref="name"
-					label="Name"
-					filled
-					required
-					prepend-inner-icon="mdi-account"
-				></v-text-field>
-				<v-text-field
-					ref="email"
-					v-model="formData.email"
-					:rules="emailRules"
-					filled
-					label="Email address"
-					type="email"
-					required
-					prepend-inner-icon="mdi-email"
-				></v-text-field>
-				<v-text-field
-					ref="phone"
-					v-model="formData.phone"
-					filled
-					label="Phone number"
-					prepend-inner-icon="mdi-phone"
-				></v-text-field>
-				<v-textarea
-					ref="message"
-					v-model="formData.message"
-					:rules="messageRules"
-					auto-grow
-					filled
-					label="Message"
-					rows="1"
-					prepend-inner-icon="mdi-message"
-					required
-				></v-textarea>
-				<v-btn
-					:disabled="!valid"
-					color="success"
-					class="mr-8 px-8"
-					@click="validate"
-					type="submit"
-				>
-					Send
-				</v-btn>
-
-				<v-btn color="error" class="mr-4" @click="reset">
-					Reset Form
-				</v-btn>
-			</v-form>
+			<textarea
+				type="hidden"
+				rows="4"
+				name="message"
+				v-model="formData.message"
+			></textarea>
 		</form>
+		<v-form
+			v-on:submit.prevent="handleSubmit"
+			ref="form"
+			v-model="valid"
+			lazy-validation
+		>
+			<v-text-field
+				v-model="formData.name"
+				:counter="30"
+				:rules="nameRules"
+				label="Name"
+				filled
+				required
+				prepend-inner-icon="mdi-account"
+			></v-text-field>
+			<v-text-field
+				v-model="formData.email"
+				:rules="emailRules"
+				filled
+				label="Email address"
+				type="email"
+				required
+				prepend-inner-icon="mdi-email"
+			></v-text-field>
+			<v-text-field
+				v-model="formData.phone"
+				filled
+				label="Phone number"
+				prepend-inner-icon="mdi-phone"
+			></v-text-field>
+			<v-textarea
+				v-model="formData.message"
+				:rules="messageRules"
+				auto-grow
+				filled
+				label="Message"
+				rows="1"
+				prepend-inner-icon="mdi-message"
+				required
+			></v-textarea>
+			<v-btn
+				:disabled="!valid"
+				color="success"
+				class="mr-8 px-8"
+				@click="validate"
+				type="submit"
+			>
+				Send
+			</v-btn>
 
-		<v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
-			<v-card class="pa-4">
-				<v-card-title class="success--text">
-					<v-icon class="pr-4" color="success">
-						mdi-check
-					</v-icon>
-					submited successfully
-					<br />
-					Thanks for contacting us :)
-					<v-spacer></v-spacer>
-					<v-btn color="primary" @click="dialog = false">
-						CLOSE
-					</v-btn>
-				</v-card-title>
-			</v-card>
-		</v-dialog>
+			<v-btn color="error" class="mr-4" @click="reset">
+				Reset Form
+			</v-btn>
+		</v-form>
 	</v-container>
 </template>
 
-<script>
+<script defer>
 export default {
+	// Meta Info ====================
+	metaInfo: {
+		title: "Contact",
+	},
+	// Data =========================
 	data: () => ({
-		valid: true,
-		errorMessage: false,
-		successMessage: false,
-		dialog: false,
 		formData: {},
-		nameRules: [
-			(v) => !!v || "Name is required",
-			(v) =>
-				(v && v.length <= 30) || "Name must be less than 30 characters",
-		],
-		messageRules: [(v) => !!v || "message is required"],
-		emailRules: [
-			(v) => !!v || "E-mail is required",
-			(v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-		],
+		successMessage: false,
+		errorMessage: false,
 	}),
-	// Methods =============
+	// Methods ======================
 	methods: {
 		validate() {
-			this.$refs.vform.validate();
+			this.$refs.form.validate();
 		},
 		reset() {
-			this.$refs.vform.reset();
+			this.$refs.form.reset();
 		},
 		Submited() {
 			Object.keys(this.formData).forEach((k) => delete this.formData[k]);
-			this.reset();
+			this.$refs.contact.reset();
 			this.successMessage = true;
 		},
 		encode(data) {
@@ -151,13 +123,8 @@ export default {
 				}),
 			})
 				.then(() => this.Submited())
-				.catch((error) => {
-					this.errorMessage = error;
-					console.log(error);
-				});
+				.catch((error) => (this.errorMessage = error));
 		},
 	},
 };
 </script>
-
-<style></style>
