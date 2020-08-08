@@ -1,4 +1,4 @@
-upd<template>
+<template>
 	<v-container class="mt-6 d-flex justify-center" fluid>
 		<v-card raised>
 			<v-tabs v-model="tab" show-arrows height="70px">
