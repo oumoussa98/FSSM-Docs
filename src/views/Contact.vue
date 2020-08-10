@@ -19,6 +19,7 @@
 				</label>
 			</p>
 			<v-text-field
+				name="name"
 				v-model="formData.name"
 				:counter="30"
 				:rules="nameRules"
@@ -28,6 +29,7 @@
 				prepend-inner-icon="mdi-account"
 			></v-text-field>
 			<v-text-field
+				name="email"
 				v-model="formData.email"
 				:rules="emailRules"
 				filled
@@ -37,12 +39,14 @@
 				prepend-inner-icon="mdi-email"
 			></v-text-field>
 			<v-text-field
+				name="phone"
 				v-model="formData.phone"
 				filled
 				label="Phone number"
 				prepend-inner-icon="mdi-phone"
 			></v-text-field>
 			<v-textarea
+				name="message"
 				v-model="formData.message"
 				:rules="messageRules"
 				auto-grow
@@ -103,12 +107,7 @@ export default {
 		errorMessage: false,
 		successMessage: false,
 		dialog: true,
-		formData: {
-			name: "",
-			phone: "",
-			email: "",
-			message: "",
-		},
+		formData: {},
 		nameRules: [
 			(v) => !!v || "Name is required",
 			(v) =>
