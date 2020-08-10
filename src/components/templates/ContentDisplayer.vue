@@ -8,12 +8,6 @@
 				</v-tab>
 			</v-tabs>
 			<v-tabs-items v-model="tab">
-				<!-- <div v-show="!succeed" class="progress">
-					<v-progress-circular
-						indeterminate
-						color="primary"
-					></v-progress-circular>
-				</div> -->
 				<v-tab-item v-for="(dta, i) in data" :key="i">
 					<v-card flat>
 						<v-treeview
@@ -25,11 +19,19 @@
 							open-on-click
 						>
 							<template v-slot:prepend="{ item, open }">
-								<v-icon v-if="!item.file">
+								<v-icon
+									color="#fcad03"
+									v-if="!item.file && !isEmpty(item)"
+								>
 									{{
 										open ? "mdi-folder-open" : "mdi-folder"
 									}}
 								</v-icon>
+								<img
+									v-if="isEmpty(item)"
+									width="25"
+									src="@/assets/images/empty-folder.svg"
+								/>
 								<v-tooltip bottom>
 									<template v-slot:activator="{ on, attrs }">
 										<v-btn
@@ -90,8 +92,15 @@ export default {
 			html: "mdi-language-html5",
 		},
 		tree: [],
-		data: "",
+		data: {},
 	}),
+	// computed ===============
+	methods: {
+		isEmpty: (item) => {
+			if (!item.file && item.children.length === 0) return true;
+			return false;
+		},
+	},
 	// lifecycle hooks ============
 
 	created() {
@@ -100,17 +109,3 @@ export default {
 	},
 };
 </script>
-<style>
-.progress {
-	margin: 50px 0;
-	width: 100px;
-	height: 50px;
-}
-.v-progress-circular {
-	position: static;
-	display: inline-flex;
-	vertical-align: middle;
-	justify-content: center;
-	align-items: center;
-}
-</style>
