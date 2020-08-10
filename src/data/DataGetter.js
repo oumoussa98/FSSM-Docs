@@ -15,6 +15,10 @@ export default {
                     children: [],
                 },
                 {
+                    name: "Travaux pratiques (TP)",
+                    children: [],
+                },
+                {
                     name: "Controles",
                     children: [],
                 },
@@ -94,7 +98,7 @@ export default {
                                                     });
                                                 });
                                             break;
-                                        case "Controles":
+                                        case "Travaux pratiques (TP)":
                                             listRef = storageRef.child(
                                                 folderRef.fullPath
                                             );
@@ -119,6 +123,31 @@ export default {
                                                     });
                                                 });
                                             break;
+                                        case "Controles":
+                                            listRef = storageRef.child(
+                                                folderRef.fullPath
+                                            );
+                                            listRef
+                                                .listAll()
+                                                .then(res => {
+                                                    res.items.forEach(itemRef => {
+                                                        let obj = {};
+                                                        obj.name = itemRef.name;
+                                                        obj.file = itemRef.name.slice(itemRef.name.lastIndexOf(".") + 1);
+                                                        storageRef
+                                                            .child(
+                                                                itemRef.fullPath
+                                                            )
+                                                            .getDownloadURL()
+                                                            .then((url) => {
+                                                                obj.href = url;
+                                                            });
+                                                        vm.data[
+                                                            key
+                                                        ][3].children.push(obj);
+                                                    });
+                                                });
+                                            break;
                                         case "Exercices":
                                             listRef = storageRef.child(
                                                 folderRef.fullPath
@@ -140,7 +169,7 @@ export default {
                                                             })
                                                         vm.data[
                                                             key
-                                                        ][3].children.push(obj);
+                                                        ][4].children.push(obj);
                                                     })
                                                 })
                                     }
@@ -148,11 +177,11 @@ export default {
                                 })  
                     }
                 })
-            })
-                .catch(error => {
-                    console.log(error)
-                    vm.succeed = false
-                });
+            }, error => {
+                   console.log(error)
+                    vm.succeed = false  
+            }
+            );
     },
     getAllData(smodules, path, slugs) {
         let vm = this
