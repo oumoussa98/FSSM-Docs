@@ -20,7 +20,7 @@
 			</div>
 
 			<v-spacer></v-spacer>
-			<!---------------- Links for mobile devices ------------------------>
+			<!---------------- button for mobile devices ------------------------>
 			<v-btn
 				icon
 				@click="drawer = true"
@@ -51,6 +51,7 @@
 					active-class="deep-purple--text text--accent-4"
 				>
 					<v-list-item
+						color="green"
 						v-for="(link, i) in links"
 						:key="i"
 						:to="link.href"
