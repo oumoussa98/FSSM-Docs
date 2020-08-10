@@ -86,14 +86,16 @@
 				</v-card-title>
 			</v-card>
 		</v-dialog>
-		<v-dialog v-if="errorMessage" v-model="dialog" max-width="500px">
-			<v-card class="pa-4">
-				<v-card-title class="red--text">
+		<v-dialog
+			class="text-wrap"
+			v-if="errorMessage"
+			v-model="dialog"
+			max-width="500px"
+		>
+			<v-card class="pa-4 text-wrap">
+				<v-card-title class="text-wrap red--text">
 					{{ errorMessage }}
 					<v-spacer></v-spacer>
-					<v-btn color="primary" @click="dialog = false">
-						CLOSE
-					</v-btn>
 				</v-card-title>
 			</v-card>
 		</v-dialog>
@@ -157,7 +159,8 @@ export default {
 			})
 				.then(() => this.Submited())
 				.catch((error) => {
-					this.errorMessage = error;
+					this.errorMessage =
+						"Something went wrong!! please try again";
 					console.log(error);
 				});
 		},
