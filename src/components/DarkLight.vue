@@ -1,5 +1,5 @@
 <template>
-	<v-btn text @click="darkModeToggle">
+	<v-btn text fab @click="darkModeToggle">
 		<v-icon large>{{ icon }}</v-icon>
 	</v-btn>
 </template>
@@ -9,7 +9,7 @@ export default {
 	// Data =================================
 	data: () => ({
 		// light and dark mode
-		icon: "mdi-brightness-2",
+		icon: "",
 		darkMode: null,
 	}),
 	// Methods =====================================
@@ -17,17 +17,18 @@ export default {
 		enableDarkMode() {
 			// 1. Add the class to the body
 			this.$vuetify.theme.dark = true;
+			this.icon = "mdi-weather-sunny";
 			// 2. Update darkMode in localStorage
 			localStorage.setItem("darkMode", "enabled");
-			this.icon = "mdi-weather-sunny";
 		},
 
 		disableDarkMode() {
 			// 1. Remove the class from the body
 			this.$vuetify.theme.dark = false;
+			this.icon = "mdi-brightness-2";
+
 			// 2. Update darkMode in localStorage
 			localStorage.setItem("darkMode", null);
-			this.icon = "mdi-brightness-2";
 		},
 
 		// toggle between dark and light mode
@@ -44,7 +45,7 @@ export default {
 		},
 	},
 	// vueJs mounted function
-	beforeMount() {
+	mounted() {
 		// check for saved 'darkMode' in localStorage
 		this.darkMode = localStorage.getItem("darkMode");
 		// If the user already visited and enabled darkMode
