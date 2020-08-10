@@ -1,70 +1,73 @@
 <template>
 	<v-container class="mt-4">
-		<v-form
+		<form
 			name="contact"
 			method="POST"
 			data-netlify="true"
 			data-netlify-honeypot="bot-field"
-			v-on:submit.prevent="handleSubmit"
-			ref="form"
-			v-model="valid"
-			lazy-validation
 		>
-			<input type="hidden" name="form-name" value="contact" />
-			<p hidden>
-				<label>
-					Don’t fill this out:
-					<input name="bot-field" />
-				</label>
-			</p>
-			<v-text-field
-				v-model="formData.name"
-				:counter="30"
-				:rules="nameRules"
-				label="Name"
-				filled
-				required
-				prepend-inner-icon="mdi-account"
-			></v-text-field>
-			<v-text-field
-				v-model="formData.email"
-				:rules="emailRules"
-				filled
-				label="Email address"
-				type="email"
-				required
-				prepend-inner-icon="mdi-email"
-			></v-text-field>
-			<v-text-field
-				v-model="formData.phone"
-				filled
-				label="Phone number"
-				prepend-inner-icon="mdi-phone"
-			></v-text-field>
-			<v-textarea
-				v-model="formData.message"
-				:rules="messageRules"
-				auto-grow
-				filled
-				label="Message"
-				rows="1"
-				prepend-inner-icon="mdi-message"
-				required
-			></v-textarea>
-			<v-btn
-				:disabled="!valid"
-				color="success"
-				class="mr-8 px-8"
-				@click="validate"
-				type="submit"
+			<v-form
+				v-on:submit.prevent="handleSubmit"
+				ref="form"
+				v-model="valid"
+				lazy-validation
 			>
-				Send
-			</v-btn>
+				<input type="hidden" name="form-name" value="contact" />
+				<p hidden>
+					<label>
+						Don’t fill this out:
+						<input name="bot-field" />
+					</label>
+				</p>
+				<v-text-field
+					v-model="formData.name"
+					:counter="30"
+					:rules="nameRules"
+					label="Name"
+					filled
+					required
+					prepend-inner-icon="mdi-account"
+				></v-text-field>
+				<v-text-field
+					v-model="formData.email"
+					:rules="emailRules"
+					filled
+					label="Email address"
+					type="email"
+					required
+					prepend-inner-icon="mdi-email"
+				></v-text-field>
+				<v-text-field
+					v-model="formData.phone"
+					filled
+					label="Phone number"
+					prepend-inner-icon="mdi-phone"
+				></v-text-field>
+				<v-textarea
+					v-model="formData.message"
+					:rules="messageRules"
+					auto-grow
+					filled
+					label="Message"
+					rows="1"
+					prepend-inner-icon="mdi-message"
+					required
+				></v-textarea>
+				<v-btn
+					:disabled="!valid"
+					color="success"
+					class="mr-8 px-8"
+					@click="validate"
+					type="submit"
+				>
+					Send
+				</v-btn>
 
-			<v-btn color="error" class="mr-4" @click="reset">
-				Reset Form
-			</v-btn>
-		</v-form>
+				<v-btn color="error" class="mr-4" @click="reset">
+					Reset Form
+				</v-btn>
+			</v-form>
+		</form>
 		<v-dialog v-if="successMessage" v-model="dialog" max-width="500px">
 			<v-card class="pa-4">
 				<v-card-title class="success--text">
@@ -74,6 +77,17 @@
 					submited successfully
 					<br />
 					Thanks for contacting us :)
+					<v-spacer></v-spacer>
+					<v-btn color="primary" @click="dialog = false">
+						CLOSE
+					</v-btn>
+				</v-card-title>
+			</v-card>
+		</v-dialog>
+		<v-dialog v-if="errorMessage" v-model="dialog" max-width="500px">
+			<v-card class="pa-4">
+				<v-card-title class="red--text">
+					{{ errorMessage }}
 					<v-spacer></v-spacer>
 					<v-btn color="primary" @click="dialog = false">
 						CLOSE
