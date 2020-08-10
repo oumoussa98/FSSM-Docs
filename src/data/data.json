@@ -1,5 +1,11 @@
 {
-	"types": ["Cours", "Travaux diriges (TD)", "Controles", "Exercices"],
+	"types": [
+		"Cours",
+		"Travaux diriges (TD)",
+		"Travaux pratiques (TP)",
+		"Controles",
+		"Exercices"
+	],
 	"levels": [
 		"Licence Fondamental",
 		"Licence Professionelle",
