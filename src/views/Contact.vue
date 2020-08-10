@@ -1,6 +1,7 @@
 <template>
 	<v-container class="mt-4">
 		<v-form
+			netlify
 			name="contact"
 			method="POST"
 			data-netlify="true"
@@ -101,8 +102,13 @@ export default {
 		valid: true,
 		errorMessage: false,
 		successMessage: false,
-		dialog: false,
-		formData: {},
+		dialog: true,
+		formData: {
+			name: "",
+			phone: "",
+			email: "",
+			message: "",
+		},
 		nameRules: [
 			(v) => !!v || "Name is required",
 			(v) =>
@@ -118,6 +124,7 @@ export default {
 	methods: {
 		validate() {
 			this.$refs.form.validate();
+			this.dialog = true;
 		},
 		reset() {
 			this.$refs.form.reset();
@@ -138,6 +145,7 @@ export default {
 				.join("&");
 		},
 		handleSubmit(e) {
+			let vm = this;
 			fetch("/", {
 				method: "POST",
 				headers: {
@@ -145,7 +153,7 @@ export default {
 				},
 				body: this.encode({
 					"form-name": e.target.getAttribute("name"),
-					...this.formData,
+					...vm.formData,
 				}),
 			})
 				.then(() => this.Submited())
