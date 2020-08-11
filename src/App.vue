@@ -16,8 +16,8 @@ export default {
 		Header,
 	},
 	watch: {
-		$route(to, from) {
-			document.title = to.meta.title || from.meta.title;
+		$route(to) {
+			document.title = to.meta.title;
 		},
 	},
 };
