@@ -11,10 +11,23 @@ module.exports = {
 					// Absolute path to compiled SPA
 					path.resolve(__dirname, "dist"),
 					// List of routes to prerender
-					["/","/contact"],
+					["/", "/upload", "/about", "/contact"],
 					{
-						// options
-					}
+						postProcessHtml: function(context) {
+							var titles = {
+								"/": "Home Page",
+								"/upload": "Files Upload",
+								"/about": "About",
+								"/contact": "Contact",
+								"/*": "404 Not Found",
+							};
+							return context.html.replace(
+								/<title>[^<]*<\/title>/i,
+								"<title>" + titles[context.route] + "</title>"
+							);
+						},
+					},
+
 				),
 			],
 		};
