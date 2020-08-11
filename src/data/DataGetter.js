@@ -177,11 +177,10 @@ export default {
                                 })  
                     }
                 })
-            }, error => {
+            }).catch(error => {
                    console.log(error)
                     vm.succeed = false  
-            }
-            );
+            });
     },
     getAllData(smodules, path, slugs) {
         let vm = this
