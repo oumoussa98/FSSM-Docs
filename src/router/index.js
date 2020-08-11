@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Upload from '../views/Upload.vue'
 import Contact from '../views/Contact.vue'
 import NotFound from '../views/404.vue'
+import About from "../views/About.vue";
+
 
 
 
@@ -36,16 +38,26 @@ Vue.use(VueRouter)
 				title: "Contact",
 			},
 		},
+
 		{
 			path: "/about",
 			name: "About",
 			// route level code-splitting
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
-			component: () =>
-				import(/* webpackChunkName: "about" */ "../views/About.vue"),
+			// component: () =>
+      // 	import(/* webpackChunkName: "about" */ "../views/About.vue"),
+      component: About,
 			meta: {
 				title: "About",
+			},
+		},
+		{
+			path: "/404",
+			name: "404",
+			component: NotFound,
+			meta: {
+				title: "404 Not Found",
 			},
 		},
   ];
