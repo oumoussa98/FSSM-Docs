@@ -1,6 +1,14 @@
 const path = require("path");
 const PrerenderSPAPlugin = require("prerender-spa-plugin");
 
+// prerender smp routes
+let smpRoutes = [];
+let smpTitles = {};
+for (let i = 1; i < 7; i++) {
+	smpRoutes.push("/licence-fondamental/smp/s" + i);
+	smpTitles["/licence-fondamental/smp/s" + i] =
+		"licence-fondamental-SMP-S" + i;
+}
 module.exports = {
 	transpileDependencies: ["vuetify"],
 	configureWebpack: () => {
@@ -9,9 +17,9 @@ module.exports = {
 			plugins: [
 				new PrerenderSPAPlugin(
 					// Absolute path to compiled SPA
-					path.resolve(__dirname, "dist"),
+					path.join(__dirname, "dist"),
 					// List of routes to prerender
-					["/", "/upload", "/about", "/contact"],
+					["/", "/upload", "/about", "/contact",...smpRoutes,"/404"],
 					{
 						postProcessHtml: function(context) {
 							var titles = {
@@ -19,15 +27,15 @@ module.exports = {
 								"/upload": "Files Upload",
 								"/about": "About",
 								"/contact": "Contact",
-								"/*": "404 Not Found",
+								"/404": "404 Not Found",
+								...smpTitles
 							};
 							return context.html.replace(
 								/<title>[^<]*<\/title>/i,
 								"<title>" + titles[context.route] + "</title>"
 							);
 						},
-					},
-
+					}
 				),
 			],
 		};
