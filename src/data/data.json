@@ -49,19 +49,19 @@
 				"Langue & terminologie 2"
 			],
 			"S3": [
-				" Mecanique du solide",
-				" Thermodynamique 2",
-				" electromagnetisme dans le vide",
-				" Chimie Organique generale",
-				" Analyse 3",
+				"Mecanique du solide",
+				"Thermodynamique 2",
+				"electromagnetisme dans le vide",
+				"Chimie Organique generale",
+				"Analyse 3",
 				"Analyse numerique et algorithme"
 			],
 			"S4": [
-				" Electronique de base",
-				" Optique physique",
-				" Electricite 3",
-				" Mecanique quantique",
-				" Cristallographie geometrique",
+				"Electronique de base",
+				"Optique physique",
+				"Electricite 3",
+				"Mecanique quantique",
+				"Cristallographie geometrique",
 				"Informatique"
 			],
 			"S5": [
@@ -118,6 +118,108 @@
 					"Syntheses des correcteur/Logique floue",
 					"Projet tutore",
 					"Projet tutore"
+				]
+			}
+		},
+		"SMC": {
+			"S1": [
+				"Mecanique du point",
+				"Thermodynamique 1",
+				"Atomistique",
+				"Thermochimie",
+				"Analyse 1",
+				"Algebre 1",
+				"Langue & terminologie 1"
+			],
+			"S2": [
+				"Electrostatique & Electrocinetique",
+				"Optique geometrique",
+				"Liaisons chimiques",
+				"Chimie des Solutions",
+				"Analyse 2",
+				"Algebre 2",
+				"Langue & terminologie 2"
+			],
+			"S3": [
+				"Chimie organique generale",
+				"Cristallographie Geometrique et cristallochimie 1",
+				"Chimie des electrolytes",
+				"Chimie Experimentale (TP)",
+				"Electromagnetisme",
+				"Informatique"
+			],
+			"S4": [
+				"Hydrocarbures & fonctions monovalentes",
+				"Chimie descriptive 1",
+				"Thermodynamique chimique",
+				"Mecanique quantique",
+				"Mathematiques",
+				"Probabilites Statiques"
+			],
+			"S5": [
+				"Chimie organique fonctionnelle",
+				"Radiocristallographie & cristallochimie 2",
+				"Cinetique et catalyse",
+				"Chimie theorique",
+				"electrochimie",
+				"Techniques spectroscopiques d’analyse"
+			],
+			"S6": {
+				"options": [
+					"Metallurgie",
+					"Chimie des Materiaux",
+					"Spectroscopie",
+					"Chimie Biomoleculaire",
+					"Metrologie et Qualite",
+					"Heterocycle et Organometallique-Catalyse"
+				],
+				"Metallurgie": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Metallurgie Extractive",
+					"Electrochimie appliquee"
+				],
+				"ChimiedesMateriaux": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Chimie de solide",
+					"Proprietes optiques et magnetiques"
+				],
+				"Spectroscopie": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Determination structurale et stereochimique par RMN multinoyaux et Multiimpulsionnelle",
+					"Methodes d’analyse et de caracterisation - Analyse de surface"
+				],
+				"ChimieBiomoleculaire": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Gestion de la  qualite et accreditation",
+					"Metrologie"
+				],
+				"MetrologieetQualite": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Chimie des biomolecules d’origine veget"
+				],
+
+				"HeterocycleetOrganometalliqueCatalyse": [
+					"PFE : Modelisation",
+					"PFE : Stage",
+					"Les grandes classes des reactions organiques",
+					"Chimie descriptive II et chimie de coordination",
+					"Chimie des biomolecules d’origine vegetale",
+					"Chimie des biomolecules de synthèse"
 				]
 			}
 		},
