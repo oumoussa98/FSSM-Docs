@@ -2,8 +2,12 @@ import firebase from "firebase/app"
 import "firebase/storage"
 export default {
     data: {},
-    succeed: true,
+    succeed: {
+        state: false
+    },
     setData(smodules) {
+        this.data = {};
+        this.succeed.state = false;
         smodules.forEach(key => {
             this.data[key] = [
                 {
@@ -182,9 +186,8 @@ export default {
                     vm.succeed = false  
             });
     },
-    getAllData(smodules, path, slugs) {
+    async getAllData(smodules, path, slugs) {
         let vm = this
-            vm.data = {};
             vm.setData(slugs);
         let keys = [];
             Object.keys(vm.data).forEach((key) => {
@@ -192,8 +195,9 @@ export default {
         });
 
          for (let i = 0; i < smodules.length; i++) {
-             vm.getdata(smodules[i], keys[i],path);
+             await vm.getdata(smodules[i], keys[i],path);
         }
+       vm.succeed.state = true;
     },
 }
 
