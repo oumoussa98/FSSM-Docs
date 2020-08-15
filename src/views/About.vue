@@ -1,7 +1,7 @@
 <template>
 	<v-container class="mt-6">
 		<h1 class="ml-4">About FSSM Documents</h1>
-		<v-col cols="10">
+		<v-col cols="8">
 			<p>
 				This website is made for FSSM (Faculté des Sciences Semlalia
 				Marrakech) students so that they have access to the courses and
@@ -12,8 +12,3 @@
 		</v-col>
 	</v-container>
 </template>
-<script>
-export default {
-	name: "about",
-};
-</script>
