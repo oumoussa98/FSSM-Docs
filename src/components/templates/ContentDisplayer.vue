@@ -10,7 +10,15 @@
 			<v-tabs-items v-model="tab">
 				<v-tab-item v-for="(dta, i) in data" :key="i">
 					<v-card flat>
+						<span class="progress" v-show="!succeed.state">
+							<v-progress-circular
+								indeterminate
+								color="primary"
+							></v-progress-circular>
+						</span>
+
 						<v-treeview
+							v-show="succeed.state"
 							v-model="tree"
 							:open="open"
 							:items="dta"
@@ -79,6 +87,7 @@ export default {
 	// Data =================
 	data: () => ({
 		tab: null,
+		succeed: null,
 		// treeview
 		open: ["public"],
 		files: {
@@ -94,7 +103,8 @@ export default {
 		tree: [],
 		data: {},
 	}),
-	// computed ===============
+
+	// methods ===============
 	methods: {
 		isEmpty: (item) => {
 			if (!item.file && item.children.length === 0) return true;
@@ -147,6 +157,15 @@ export default {
 	created() {
 		dataGetter.getAllData(this.smodules, this.path, this.slugs);
 		this.data = dataGetter.data;
+		this.succeed = dataGetter.succeed;
 	},
 };
 </script>
+<style>
+.progress {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 30px;
+}
+</style>
