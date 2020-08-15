@@ -20,8 +20,11 @@ module.exports = {
 					staticDir: path.join(__dirname, "dist"),
 					// List of routes to prerender
 					routes: ["/", "/upload", "/about", "/contact", ...smpRoutes],
-					postProcessHtml: function (context) {
-						var titles = {
+					postProcess: context => {
+						if (context.route.endsWith('.html')) {
+							context.outputPath = path.join(__dirname, 'dist', context.route)
+						}
+						let titles = {
 							"/": "Home Page",
 							"/upload": "Files Upload",
 							"/about": "About",
