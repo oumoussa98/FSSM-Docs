@@ -15,28 +15,26 @@ module.exports = {
 		if (process.env.NODE_ENV !== "production") return;
 		return {
 			plugins: [
-				new PrerenderSPAPlugin(
+				new PrerenderSPAPlugin({
 					// Absolute path to compiled SPA
-					path.join(__dirname, "dist"),
+					staticDir: path.join(__dirname, "dist"),
 					// List of routes to prerender
-					["/", "/upload", "/about", "/contact",...smpRoutes,"/404"],
-					{
-						postProcessHtml: function(context) {
-							var titles = {
-								"/": "Home Page",
-								"/upload": "Files Upload",
-								"/about": "About",
-								"/contact": "Contact",
-								"/404": "404 Not Found",
-								...smpTitles
-							};
-							return context.html.replace(
-								/<title>[^<]*<\/title>/i,
-								"<title>" + titles[context.route] + "</title>"
-							);
-						},
-					}
-				),
+					routes: ["/", "/upload", "/about", "/contact", ...smpRoutes],
+					postProcessHtml: function (context) {
+						var titles = {
+							"/": "Home Page",
+							"/upload": "Files Upload",
+							"/about": "About",
+							"/contact": "Contact",
+							"/404": "404 Not Found",
+							...smpTitles
+						};
+						return context.html.replace(
+							/<title>[^<]*<\/title>/i,
+							"<title>" + titles[context.route] + "</title>"
+						);
+					},
+				}),
 			],
 		};
 	},
