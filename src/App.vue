@@ -2,7 +2,9 @@
 	<v-app dark>
 		<Header />
 		<v-main>
-			<router-view />
+			<transition name="fade">
+				<router-view />
+			</transition>
 		</v-main>
 	</v-app>
 </template>
@@ -32,4 +34,8 @@ a
     &.router-link-exact-active #btn
       color: #42b983
       pointer-events: none
+.fade-enter-active
+  transition: all 0.6s
+.fade-enter
+  opacity: 0
 </style>
