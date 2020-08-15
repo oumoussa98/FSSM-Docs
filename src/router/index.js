@@ -7,10 +7,6 @@ import NotFound from '../views/404.vue'
 import About from "../views/About.vue";
 
 
-
-
-
-
 Vue.use(VueRouter)
 
   const routes = [
@@ -46,23 +42,14 @@ Vue.use(VueRouter)
 			// this generates a separate chunk (about.[hash].js) for this route
 			// which is lazy-loaded when the route is visited.
 			// component: () =>
-      // 	import(/* webpackChunkName: "about" */ "../views/About.vue"),
       component: About,
 			meta: {
 				title: "About",
 			},
 		},
-		{
-			path: "/404",
-			name: "404",
-			component: NotFound,
-			meta: {
-				title: "404 Not Found",
-			},
-		},
   ];
 //Licence fondamental SMP routes
-for (let i = 1; i < 7; i++) {
+for (let i = 1; i < 12; i++) {
   let obj = {};
   obj.path = "/licence-fondamental/smp/s"+i;
   obj.name = "smps" + i;
@@ -71,7 +58,16 @@ for (let i = 1; i < 7; i++) {
   obj.meta.title = "licence-fondamental-SMP-S" + i;
   routes.push(obj);
 }
-
+//Licence fondamental SMC routes
+for (let i = 1; i < 6; i++) {
+  let obj = {};
+  obj.path = "/licence-fondamental/smc/s"+i;
+  obj.name = "smcs" + i;
+  obj.component = () => import('../components/licence-fondamental/SMC/S' + i);
+  obj.meta = {};
+  obj.meta.title = "licence-fondamental-SMC-S" + i;
+  routes.push(obj);
+}
 
 // catch 404 not found 
 const obj = {
