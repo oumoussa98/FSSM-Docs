@@ -220,6 +220,54 @@ export default {
 								}
 						}
 						break;
+					// SMC
+					case "SMC":
+						switch (this.semestre) {
+							case "S1":
+								this.lfModules = json.lfmodules.SMC.S1;
+								break;
+							case "S2":
+								this.lfModules = json.lfmodules.SMC.S2;
+								break;
+							case "S3":
+								this.lfModules = json.lfmodules.SMC.S3;
+								break;
+							case "S4":
+								this.lfModules = json.lfmodules.SMC.S4;
+								break;
+							case "S5":
+								this.lfModules = json.lfmodules.SMC.S5;
+								break;
+							case "S6":
+								this.s6Options = json.lfmodules.SMC.S6.options;
+								switch (this.option) {
+									case "Metallurgie":
+										this.lfModules =
+											json.lfmodules.SMC.S6.Metallurgie;
+										break;
+									case "Chimie des Materiaux":
+										this.lfModules =
+											json.lfmodules.SMC.S6.ChimiedesMateriaux;
+										break;
+									case "Spectroscopie":
+										this.lfModules =
+											json.lfmodules.SMC.S6.Spectroscopie;
+										break;
+									case "Chimie Biomoleculaire":
+										this.lfModules =
+											json.lfmodules.SMC.S6.ChimieBiomoleculaire;
+										break;
+									case "Metrologie et Qualite":
+										this.lfModules =
+											json.lfmodules.SMC.S6.MetrologieetQualite;
+										break;
+									case "Heterocycle et Organometallique-Catalyse":
+										this.lfModules =
+											json.lfmodules.SMC.S6.HeterocycleetOrganometalliqueCatalyse;
+										break;
+								}
+						}
+						break;
 					// SVT
 					case "SVT":
 						switch (this.semestre) {
